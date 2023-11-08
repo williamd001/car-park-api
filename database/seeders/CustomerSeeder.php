@@ -7,21 +7,22 @@ use Illuminate\Support\Facades\DB;
 
 class CustomerSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
+    public const CUSTOMER_1 = 1;
+
+    public const CUSTOMER_2 = 2;
+
     public function run(): void
     {
         DB::table('customers')
             ->insert(
                 [
                     [
-                        'id' => 1,
+                        'id' => self::CUSTOMER_1,
                         'first_name' => 'John',
                         'last_name' => 'Doe',
                     ],
                     [
-                        'id' => 2,
+                        'id' => self::CUSTOMER_2,
                         'first_name' => 'Jane',
                         'last_name' => 'Doe',
                     ]

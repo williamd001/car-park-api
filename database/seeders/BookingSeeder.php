@@ -5,15 +5,19 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class ParkingSpaceBookingsSeeder extends Seeder
+class BookingSeeder extends Seeder
 {
+    public const CUSTOMER_1_BOOKING_1 = 1;
+
+    public const CUSTOMER_1_BOOKING_2 = 4;
+
     public function run(): void
     {
         DB::table('parking_space_bookings')
             ->insert(
                 [
                     [
-                        'id' => 1,
+                        'id' => self::CUSTOMER_1_BOOKING_1,
                         'customer_id' => 1,
                         'parking_space_id' => 3,
                         'date_from' => '2023-01-02',
@@ -37,7 +41,7 @@ class ParkingSpaceBookingsSeeder extends Seeder
                         'price_gbp' => '100.0',
                     ],
                     [
-                        'id' => 4,
+                        'id' => self::CUSTOMER_1_BOOKING_2,
                         'customer_id' => 1,
                         'parking_space_id' => 10,
                         'date_from' => '2023-04-20',

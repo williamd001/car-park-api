@@ -6,7 +6,7 @@ use App\Http\Requests\ParkingSpaceIndexRequest;
 use App\Repositories\ParkingSpaceRepository;
 use Illuminate\Http\JsonResponse;
 
-class ParkingSpace extends Controller
+class ParkingSpaceController extends Controller
 {
     public function __construct(private ParkingSpaceRepository $parkingSpaceRepository)
     {

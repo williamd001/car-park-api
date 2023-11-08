@@ -34,6 +34,29 @@ paths:
                 $ref: '#/components/schemas/ArrayOfParkingSpaces'
         '422':
           $ref: '#/components/responses/Unprocessable'
+  /customers/{customerId}/bookings/{bookingId}:
+    delete:
+      summary: Delete parking space booking
+      description: Deletes a parking space booking for a customer
+      parameters:
+        - name: customerId
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 1
+        - name: bookingId
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '204':
+          description: No content - successfully deleted
+        '404':
+          description: Booking not found for customer
+
 components:
   schemas:
     ParkingSpace:
