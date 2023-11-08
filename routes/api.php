@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\ParkingSpace;
+use App\Http\Controllers\ParkingSpaceController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,4 +19,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/parking-spaces/availability', [ParkingSpace::class, 'index']);
+Route::get('/parking-spaces/availability', [ParkingSpaceController::class, 'index']);
+
+Route::delete('/customers/{customerId}/bookings/{bookingId}', [\App\Http\Controllers\BookingController::class, 'destroy']);
