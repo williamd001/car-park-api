@@ -1,0 +1,64 @@
+openapi: 3.0.0
+info:
+  title: Parking Space API
+  version: 1.0.0
+servers:
+  - url: http://localhost/api
+    description: Local environment
+paths:
+  /parking-spaces/availability:
+    get:
+      summary: Parking space availability
+      description: Returns a list of available parking spaces for a given date range.
+      parameters:
+        - name: dateFrom
+          in: query
+          required: true
+          example: 2023-01-01
+          schema:
+            type: string
+            format: date
+        - name: dateTo
+          in: query
+          required: true
+          example: 2023-01-08
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: A JSON array of parking spaces
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArrayOfParkingSpaces'
+        '422':
+          $ref: '#/components/responses/Unprocessable'
+components:
+  schemas:
+    ParkingSpace:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        location:
+          type: string
+          example: Terminal 1
+    ArrayOfParkingSpaces:
+      type: array
+      items:
+        $ref: '#/components/schemas/ParkingSpace'
+  responses:
+    Unprocessable:
+      description: Server cannot process the request - typically indicates a validation error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              errors:
+                type: object
+                additionalProperties: true

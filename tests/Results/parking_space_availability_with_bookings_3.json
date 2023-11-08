@@ -8,7 +8,15 @@
         "location_name": "Terminal 1"
     },
     {
+        "id": 3,
+        "location_name": "Terminal 1"
+    },
+    {
         "id": 4,
+        "location_name": "Terminal 1"
+    },
+    {
+        "id": 5,
         "location_name": "Terminal 1"
     },
     {
@@ -25,10 +33,6 @@
     },
     {
         "id": 9,
-        "location_name": "Terminal 2"
-    },
-    {
-        "id": 10,
         "location_name": "Terminal 2"
     }
 ]

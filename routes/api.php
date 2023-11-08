@@ -19,4 +19,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/parking-space/availability', [ParkingSpace::class, 'index']);
+Route::get('/parking-spaces/availability', [ParkingSpace::class, 'index']);

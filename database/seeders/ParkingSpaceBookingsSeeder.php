@@ -27,7 +27,23 @@ class ParkingSpaceBookingsSeeder extends Seeder
                         'date_from' => '2023-01-01',
                         'date_to' => '2023-01-21',
                         'price_gbp' => '280.0',
-                    ]
+                    ],
+                    [
+                        'id' => 3,
+                        'customer_id' => 2,
+                        'parking_space_id' => 1,
+                        'date_from' => '2023-02-10',
+                        'date_to' => '2023-02-21',
+                        'price_gbp' => '100.0',
+                    ],
+                    [
+                        'id' => 4,
+                        'customer_id' => 1,
+                        'parking_space_id' => 10,
+                        'date_from' => '2023-04-20',
+                        'date_to' => '2023-05-05',
+                        'price_gbp' => '280.0',
+                    ],
                 ]
             );
     }

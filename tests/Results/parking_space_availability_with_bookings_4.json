@@ -1,9 +1,5 @@
 [
     {
-        "id": 1,
-        "location_name": "Terminal 1"
-    },
-    {
         "id": 2,
         "location_name": "Terminal 1"
     },
@@ -25,10 +21,6 @@
     },
     {
         "id": 9,
-        "location_name": "Terminal 2"
-    },
-    {
-        "id": 10,
         "location_name": "Terminal 2"
     }
 ]

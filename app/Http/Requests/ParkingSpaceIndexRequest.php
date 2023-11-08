@@ -12,11 +12,12 @@ class ParkingSpaceIndexRequest extends FormRequest
         return [
             'dateFrom' => [
                 'required',
-                'date_format:Y-m-d'
+                'date_format:Y-m-d',
             ],
             'dateTo' => [
                 'required',
-                'date_format:Y-m-d'
+                'date_format:Y-m-d',
+                'after:dateFrom',
             ]
         ];
     }

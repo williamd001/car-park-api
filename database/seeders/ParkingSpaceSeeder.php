@@ -26,10 +26,30 @@ class ParkingSpaceSeeder extends Seeder
                     ],
                     [
                         'id' => 4,
-                        'location_id' => 2,
+                        'location_id' => 1,
                     ],
                     [
                         'id' => 5,
+                        'location_id' => 1,
+                    ],
+                    [
+                        'id' => 6,
+                        'location_id' => 2,
+                    ],
+                    [
+                        'id' => 7,
+                        'location_id' => 2,
+                    ],
+                    [
+                        'id' => 8,
+                        'location_id' => 2,
+                    ],
+                    [
+                        'id' => 9,
+                        'location_id' => 2,
+                    ],
+                    [
+                        'id' => 10,
                         'location_id' => 2,
                     ],
                 ]
