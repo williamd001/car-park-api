@@ -17,8 +17,9 @@ class ParkingSpaceMySQLSource implements ParkingSpaceSource
             ->select(
                 '
             SELECT
-                ps.id,
-                l.name AS location_name
+                ps.id AS parking_space_id,
+                l.name AS location_name,
+                ROUND(:duration_in_days * l.default_price_per_day_gbp, 2) AS total_price_gbp
             FROM parking_spaces AS ps
                 INNER JOIN locations AS l ON ps.location_id = l.id
                 LEFT JOIN parking_space_bookings AS psb ON ps.id = psb.parking_space_id
@@ -29,7 +30,8 @@ class ParkingSpaceMySQLSource implements ParkingSpaceSource
                 ',
                 [
                     'date_from' => $dateFrom->toDateString(),
-                    'date_to' => $dateTo->toDateString()
+                    'date_to' => $dateTo->toDateString(),
+                    'duration_in_days' => $dateTo->diffInDays($dateFrom)
                 ]
             );
     }

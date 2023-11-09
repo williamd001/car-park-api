@@ -1,34 +1,42 @@
 [
     {
-        "id": 1,
-        "location_name": "Terminal 1"
+        "parking_space_id": 1,
+        "location_name": "Terminal 1",
+        "total_price_gbp": 87.5
     },
     {
-        "id": 2,
-        "location_name": "Terminal 1"
+        "parking_space_id": 2,
+        "location_name": "Terminal 1",
+        "total_price_gbp": 87.5
     },
     {
-        "id": 4,
-        "location_name": "Terminal 1"
+        "parking_space_id": 4,
+        "location_name": "Terminal 1",
+        "total_price_gbp": 87.5
     },
     {
-        "id": 6,
-        "location_name": "Terminal 2"
+        "parking_space_id": 6,
+        "location_name": "Terminal 2",
+        "total_price_gbp": 140
     },
     {
-        "id": 7,
-        "location_name": "Terminal 2"
+        "parking_space_id": 7,
+        "location_name": "Terminal 2",
+        "total_price_gbp": 140
     },
     {
-        "id": 8,
-        "location_name": "Terminal 2"
+        "parking_space_id": 8,
+        "location_name": "Terminal 2",
+        "total_price_gbp": 140
     },
     {
-        "id": 9,
-        "location_name": "Terminal 2"
+        "parking_space_id": 9,
+        "location_name": "Terminal 2",
+        "total_price_gbp": 140
     },
     {
-        "id": 10,
-        "location_name": "Terminal 2"
+        "parking_space_id": 10,
+        "location_name": "Terminal 2",
+        "total_price_gbp": 140
     }
 ]

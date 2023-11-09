@@ -62,12 +62,15 @@ components:
     ParkingSpace:
       type: object
       properties:
-        id:
+        parking_space_id:
           type: integer
           example: 1
-        location:
+        location_name:
           type: string
           example: Terminal 1
+        total_price_gbp:
+          type: number
+          example: 120.5
     ArrayOfParkingSpaces:
       type: array
       items:
