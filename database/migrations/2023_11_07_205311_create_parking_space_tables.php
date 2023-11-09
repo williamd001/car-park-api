@@ -22,6 +22,8 @@ return new class extends Migration
             $table->id();
 
             $table->string('name')->nullable(false);
+
+            $table->decimal('default_price_per_day_gbp', 8, 2, true);
         });
 
         Schema::create('parking_spaces', function (Blueprint $table) {

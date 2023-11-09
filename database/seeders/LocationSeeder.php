@@ -16,10 +16,12 @@ class LocationSeeder extends Seeder
                     [
                         'id' => 1,
                         'name' => 'Terminal 1',
+                        'default_price_per_day_gbp' => 12.50
                     ],
                     [
                         'id' => 2,
                         'name' => 'Terminal 2',
+                        'default_price_per_day_gbp' => 20.0
                     ],
                 ]
             );
