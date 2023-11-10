@@ -35,4 +35,32 @@ class ParkingSpaceMySQLSource implements ParkingSpaceSource
                 ]
             );
     }
+
+    public function isParkingSpaceAvailable(
+        int    $parkingSpaceId,
+        Carbon $dateFrom,
+        Carbon $dateTo
+    ): bool
+    {
+        $results = $this->database
+            ->select(
+                '
+            SELECT
+                ps.id AS parking_space_id
+            FROM parking_space_bookings AS psb
+                INNER JOIN parking_spaces AS ps ON psb.parking_space_id = ps.id
+            WHERE
+                ps.id = :parking_space_id
+                AND psb.date_from <= :date_to
+                AND psb.date_to >= :date_from
+                ',
+                [
+                    'parking_space_id' => $parkingSpaceId,
+                    'date_from' => $dateFrom->toDateString(),
+                    'date_to' => $dateTo->toDateString(),
+                ]
+            );
+
+        return count($results) === 0;
+    }
 }

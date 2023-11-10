@@ -9,6 +9,10 @@ class BookingSeeder extends Seeder
 {
     public const CUSTOMER_1_BOOKING_1 = 1;
 
+    public const CUSTOMER_1_BOOKING_DATE_FROM = '2023-01-02';
+
+    public const CUSTOMER_1_BOOKING_DATE_TO = '2023-01-06';
+
     public const CUSTOMER_1_BOOKING_2 = 4;
 
     public function run(): void
@@ -20,7 +24,7 @@ class BookingSeeder extends Seeder
                         'id' => self::CUSTOMER_1_BOOKING_1,
                         'customer_id' => 1,
                         'parking_space_id' => 3,
-                        'date_from' => '2023-01-02',
+                        'date_from' => self::CUSTOMER_1_BOOKING_DATE_FROM,
                         'date_to' => '2023-01-06',
                         'price_gbp' => '80.0',
                     ],

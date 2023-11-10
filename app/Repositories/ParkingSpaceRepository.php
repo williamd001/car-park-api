@@ -15,4 +15,17 @@ class ParkingSpaceRepository
     {
         return $this->parkingSpaceSource->getAvailableParkingSpaces($dateFrom, $dateTo);
     }
+
+    public function isParkingSpaceAvailable(
+        int $parkingSpaceId,
+        Carbon $dateFrom,
+        Carbon $dateTo
+    ): bool
+    {
+        return $this->parkingSpaceSource->isParkingSpaceAvailable(
+            $parkingSpaceId,
+            $dateFrom,
+            $dateTo
+        );
+    }
 }

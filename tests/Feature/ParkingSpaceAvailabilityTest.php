@@ -2,10 +2,7 @@
 
 namespace Tests\Feature;
 
-use Database\Seeders\CustomerSeeder;
-use Database\Seeders\LocationSeeder;
-use Database\Seeders\BookingSeeder;
-use Database\Seeders\ParkingSpaceSeeder;
+use Database\Seeders\DatabaseSeeder;
 use Tests\TestCase;
 
 class ParkingSpaceAvailabilityTest extends TestCase
@@ -14,10 +11,7 @@ class ParkingSpaceAvailabilityTest extends TestCase
     {
         parent::setUp();
 
-        $this->seed(CustomerSeeder::class);
-        $this->seed(LocationSeeder::class);
-        $this->seed(ParkingSpaceSeeder::class);
-        $this->seed(BookingSeeder::class);
+        $this->seed(DatabaseSeeder::class);
     }
 
     /**
