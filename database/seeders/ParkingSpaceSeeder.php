@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\DB;
 
 class ParkingSpaceSeeder extends Seeder
 {
+    public const NON_EXISTENT_PARKING_SPACE = 999;
+
     public function run(): void
     {
         DB::table('parking_spaces')

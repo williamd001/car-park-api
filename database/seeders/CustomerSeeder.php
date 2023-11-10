@@ -11,6 +11,8 @@ class CustomerSeeder extends Seeder
 
     public const CUSTOMER_2 = 2;
 
+    public const NON_EXISTENT_CUSTOMER = 999;
+
     public function run(): void
     {
         DB::table('customers')

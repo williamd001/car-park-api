@@ -34,6 +34,48 @@ paths:
                 $ref: '#/components/schemas/ArrayOfParkingSpaces'
         '422':
           $ref: '#/components/responses/Unprocessable'
+  /customers/{customerId}/bookings:
+    post:
+      summary: Create parking space booking
+      description: Store a parking space booking for a customer
+      parameters:
+        - name: customerId
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 1
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                parking_space_id:
+                  type: integer
+                  example: 1
+                date_from:
+                  type: string
+                  format: date
+                  example: 2023-08-01
+                date_to:
+                  type: string
+                  format: date
+                  example: 2023-08-12
+                price_gbp:
+                  type: number
+                  example: 80.50
+      responses:
+        '201':
+          description: Booking successfully created
+          content:
+            application/json:
+              schema:
+                type: object
+        '422':
+          $ref: '#/components/responses/Unprocessable'
+
   /customers/{customerId}/bookings/{bookingId}:
     delete:
       summary: Delete parking space booking

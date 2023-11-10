@@ -4,8 +4,7 @@ namespace Tests\Feature;
 
 use Database\Seeders\BookingSeeder;
 use Database\Seeders\CustomerSeeder;
-use Database\Seeders\LocationSeeder;
-use Database\Seeders\ParkingSpaceSeeder;
+use Database\Seeders\DatabaseSeeder;
 use Tests\TestCase;
 
 class DeleteParkingSpaceBookingTest extends TestCase
@@ -14,13 +13,8 @@ class DeleteParkingSpaceBookingTest extends TestCase
     {
         parent::setUp();
 
-        $this->seed(CustomerSeeder::class);
-        $this->seed(LocationSeeder::class);
-        $this->seed(ParkingSpaceSeeder::class);
-        $this->seed(BookingSeeder::class);
+        $this->seed(DatabaseSeeder::class);
     }
-
-    private const NON_EXISTENT_CUSTOMER_ID = 404;
 
     public function testDeleteBooking(): void
     {
@@ -93,7 +87,7 @@ class DeleteParkingSpaceBookingTest extends TestCase
     {
         $this->json(
             'DELETE',
-            '/api/customers/' . self::NON_EXISTENT_CUSTOMER_ID . '/bookings/' . BookingSeeder::CUSTOMER_1_BOOKING_1
+            '/api/customers/' . CustomerSeeder::NON_EXISTENT_CUSTOMER . '/bookings/' . BookingSeeder::CUSTOMER_1_BOOKING_1
         )
             ->assertNotFound();
     }
