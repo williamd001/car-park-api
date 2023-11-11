@@ -15,6 +15,8 @@ class BookingSeeder extends Seeder
 
     public const CUSTOMER_1_BOOKING_2 = 4;
 
+    public const NON_EXISTENT_BOOKING = 999;
+
     public function run(): void
     {
         DB::table('parking_space_bookings')

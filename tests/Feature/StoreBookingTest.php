@@ -35,9 +35,9 @@ class StoreBookingTest extends TestCase
             'api/customers/' . CustomerSeeder::CUSTOMER_1 . '/bookings',
             [
                 'parking_space_id' => 1,
-                'date_from' => '2023-04-20',
-                'date_to' => '2023-05-02',
-                'price_gbp' => 100,
+                'date_from' => '2023-04-01',
+                'date_to' => '2023-04-05',
+                'price_gbp' => 62.50,
             ]
         )
             ->assertCreated()
@@ -45,9 +45,9 @@ class StoreBookingTest extends TestCase
                 [
                     'customer_id' => CustomerSeeder::CUSTOMER_1,
                     'parking_space_id' => 1,
-                    'date_from' => '2023-04-20',
-                    'date_to' => '2023-05-02',
-                    'price_gbp' => 100,
+                    'date_from' => '2023-04-01',
+                    'date_to' => '2023-04-05',
+                    'price_gbp' => 62.50,
                     'created_at' => self::TEST_DATE_TIME,
                     'updated_at' => self::TEST_DATE_TIME
                 ]
@@ -58,9 +58,9 @@ class StoreBookingTest extends TestCase
             [
                 'customer_id' => CustomerSeeder::CUSTOMER_1,
                 'parking_space_id' => 1,
-                'date_from' => '2023-04-20',
-                'date_to' => '2023-05-02',
-                'price_gbp' => 100,
+                'date_from' => '2023-04-01',
+                'date_to' => '2023-04-05',
+                'price_gbp' => 62.50,
             ]
         );
     }
@@ -91,6 +91,38 @@ class StoreBookingTest extends TestCase
                 'date_from' => BookingSeeder::CUSTOMER_1_BOOKING_DATE_FROM,
                 'date_to' => BookingSeeder::CUSTOMER_1_BOOKING_DATE_TO,
                 'price_gbp' => 100,
+            ]
+        );
+    }
+
+    public function testPriceMustBeValid(): void
+    {
+        $error = 'Invalid price for Parking space 1. From 2023-04-20 to 2023-05-02. Price in GBP should be 162.50';
+
+        $this->json(
+            'POST',
+            'api/customers/' . CustomerSeeder::CUSTOMER_2 . '/bookings',
+            [
+                'parking_space_id' => 1,
+                'date_from' => '2023-04-20',
+                'date_to' => '2023-05-02',
+                'price_gbp' => 10.00,
+            ]
+        )
+            ->assertInvalid(
+                [
+                    'price_gbp' => $error
+                ]
+            );
+
+        $this->assertDatabaseMissing(
+            'parking_space_bookings',
+            [
+                'customer_id' => CustomerSeeder::CUSTOMER_2,
+                'parking_space_id' => 1,
+                'date_from' => '2023-04-20',
+                'date_to' => '2023-05-02',
+                'price_gbp' => 10.00,
             ]
         );
     }

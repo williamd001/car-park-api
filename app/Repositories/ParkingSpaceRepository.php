@@ -17,12 +17,27 @@ class ParkingSpaceRepository
     }
 
     public function isParkingSpaceAvailable(
-        int $parkingSpaceId,
+        int    $parkingSpaceId,
         Carbon $dateFrom,
-        Carbon $dateTo
+        Carbon $dateTo,
+        ?int $bookingIdToIgnore = null
     ): bool
     {
         return $this->parkingSpaceSource->isParkingSpaceAvailable(
+            $parkingSpaceId,
+            $dateFrom,
+            $dateTo,
+            $bookingIdToIgnore
+        );
+    }
+
+    public function calculatePriceGbp(
+        int    $parkingSpaceId,
+        Carbon $dateFrom,
+        Carbon $dateTo
+    ): float
+    {
+        return $this->parkingSpaceSource->calculatePriceGbp(
             $parkingSpaceId,
             $dateFrom,
             $dateTo
