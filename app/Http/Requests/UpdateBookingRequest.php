@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Rules\ParkingSpaceAvailable;
+use App\Rules\ValidPrice;
 use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -27,12 +28,6 @@ class UpdateBookingRequest extends FormRequest
                 'numeric',
                 'exists:customers,id'
             ],
-            'price_gbp' => [
-                'required',
-                'min:0',
-                'max:99999',
-                'numeric'
-            ],
             'booking_id' => [
                 'integer',
                 'numeric',
@@ -44,6 +39,13 @@ class UpdateBookingRequest extends FormRequest
                 'numeric',
                 'exists:parking_spaces,id',
                 new ParkingSpaceAvailable
+            ],
+            'price_gbp' => [
+                'required',
+                'min:0',
+                'max:99999',
+                'numeric',
+                new ValidPrice
             ],
         ];
     }
@@ -66,22 +68,22 @@ class UpdateBookingRequest extends FormRequest
 
     public function getParkingSpaceId(): int
     {
-        return (int) $this->post('parking_space_id');
+        return (int) $this->json('parking_space_id');
     }
 
     public function getDateFrom(): Carbon
     {
-        return new Carbon($this->post('date_from'));
+        return new Carbon($this->json('date_from'));
     }
 
     public function getDateTo(): Carbon
     {
-        return new Carbon($this->post('date_to'));
+        return new Carbon($this->json('date_to'));
     }
 
     public function getPriceGbp(): float
     {
-        return (float) $this->post('price_gbp');
+        return (float) $this->json('price_gbp');
     }
 
     public function getBookingId(): int

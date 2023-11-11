@@ -27,7 +27,7 @@ class UpdateBookingTest extends TestCase
                 'parking_space_id' => 3,
                 'date_from' => '2023-01-02',
                 'date_to' => '2023-01-06',
-                'price_gbp' => '80.0',
+                'price_gbp' => '62.50',
             ]
         );
 
@@ -38,7 +38,7 @@ class UpdateBookingTest extends TestCase
                 'parking_space_id' => 3,
                 'date_from' => '2023-02-02',
                 'date_to' => '2023-02-06',
-                'price_gbp' => '80.0',
+                'price_gbp' => '62.50',
             ]
         )
             ->assertOk()
@@ -49,7 +49,7 @@ class UpdateBookingTest extends TestCase
                     'parking_space_id' => 3,
                     'date_from' => '2023-02-02',
                     'date_to' => '2023-02-06',
-                    'price_gbp' => 80,
+                    'price_gbp' => 62.50,
                     'created_at' => '2022-12-20 09:00:00',
                     'updated_at' => '2023-01-01 09:00:00',
                 ]
@@ -63,7 +63,7 @@ class UpdateBookingTest extends TestCase
                 'parking_space_id' => 3,
                 'date_from' => '2023-02-02',
                 'date_to' => '2023-02-06',
-                'price_gbp' => '80.0',
+                'price_gbp' => 62.50,
             ]
         );
     }
@@ -104,6 +104,20 @@ class UpdateBookingTest extends TestCase
     // testing parking space availability check ignores current booking id
     public function testUserCanUpdateBookingDates(): void
     {
+        $this->assertDatabaseHas(
+            'parking_space_bookings',
+            [
+                'id' => BookingSeeder::CUSTOMER_2_BOOKING_1,
+                'customer_id' => 2,
+                'parking_space_id' => 5,
+                'date_from' => BookingSeeder::CUSTOMER_2_BOOKING_1_DATE_FROM,
+                'date_to' => '2023-01-21',
+                'price_gbp' => 262.50,
+                'created_at' => '2022-12-20 09:00:00',
+                'updated_at' => '2022-12-20 09:00:00',
+            ]
+        );
+
         $this->json(
             'PUT',
             '/api/customers/' . CustomerSeeder::CUSTOMER_2 . '/bookings/' . BookingSeeder::CUSTOMER_2_BOOKING_1,
@@ -111,10 +125,22 @@ class UpdateBookingTest extends TestCase
                 'parking_space_id' => 5,
                 'date_from' => BookingSeeder::CUSTOMER_2_BOOKING_1_DATE_FROM,
                 'date_to' => '2023-01-23',
-                'price_gbp' => '320',
+                'price_gbp' => 287.50,
             ]
         )
-            ->assertOk();
+            ->assertOk()
+            ->assertExactJson(
+                [
+                    'id' => BookingSeeder::CUSTOMER_2_BOOKING_1,
+                    'customer_id' => CustomerSeeder::CUSTOMER_2,
+                    'parking_space_id' => 5,
+                    'date_from' => BookingSeeder::CUSTOMER_2_BOOKING_1_DATE_FROM,
+                    'date_to' => '2023-01-23',
+                    'price_gbp' => 287.50,
+                    'created_at' => '2022-12-20 09:00:00',
+                    'updated_at' => '2023-01-01 09:00:00',
+                ]
+            );
 
         $this->assertDatabaseHas(
             'parking_space_bookings',
@@ -124,7 +150,7 @@ class UpdateBookingTest extends TestCase
                 'parking_space_id' => 5,
                 'date_from' => BookingSeeder::CUSTOMER_2_BOOKING_1_DATE_FROM,
                 'date_to' => '2023-01-23',
-                'price_gbp' => '320',
+                'price_gbp' => 287.50,
             ]
         );
     }

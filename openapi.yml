@@ -48,9 +48,14 @@ paths:
       requestBody:
         required: true
         content:
-          multipart/form-data:
+          application/json:
             schema:
               type: object
+              required:
+                - parking_space_id
+                - date_from
+                - date_to
+                - price_gbp
               properties:
                 parking_space_id:
                   type: integer
@@ -58,25 +63,76 @@ paths:
                 date_from:
                   type: string
                   format: date
-                  example: 2023-08-01
+                  example: 2023-02-02
                 date_to:
                   type: string
                   format: date
-                  example: 2023-08-12
+                  example: 2023-02-06
                 price_gbp:
                   type: number
-                  example: 80.50
+                  example: 62.50
       responses:
         '201':
           description: Booking successfully created
           content:
             application/json:
               schema:
-                type: object
+                $ref: '#/components/schemas/Booking'
         '422':
           $ref: '#/components/responses/Unprocessable'
 
   /customers/{customerId}/bookings/{bookingId}:
+    put:
+      summary: Update parking space booking
+      description: Updates a parking space booking for a customer
+      parameters:
+        - name: customerId
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 1
+        - name: bookingId
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - parking_space_id
+                - date_from
+                - date_to
+                - price_gbp
+              properties:
+                parking_space_id:
+                  type: integer
+                  example: 1
+                date_from:
+                  type: string
+                  format: date
+                  example: 2023-02-02
+                date_to:
+                  type: string
+                  format: date
+                  example: 2023-02-06
+                price_gbp:
+                  type: number
+                  example: 62.50
+      responses:
+        '201':
+          description: Booking successfully updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Booking'
+        '422':
+          $ref: '#/components/responses/Unprocessable'
     delete:
       summary: Delete parking space booking
       description: Deletes a parking space booking for a customer
@@ -117,6 +173,37 @@ components:
       type: array
       items:
         $ref: '#/components/schemas/ParkingSpace'
+    Booking:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        customer_id:
+          type: integer
+          example: 1
+        parking_space_id:
+          type: integer
+          example: 1
+        date_from:
+          type: string
+          format: date
+          example: 2023-01-01
+        date_to:
+          type: string
+          format: date
+          example: 2023-01-23
+        price_gbp:
+          type: number
+          example: 287.50
+        created_at:
+          type: string
+          format: date-time
+          example: 2022-12-20 9:00:00
+        updated_at:
+          type: string
+          format: date-time
+          example: 2022-12-20 9:00:00
   responses:
     Unprocessable:
       description: Server cannot process the request - typically indicates a validation error

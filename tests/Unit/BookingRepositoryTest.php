@@ -1,8 +1,7 @@
 <?php
 
-namespace Tests\Unit;
 
-use App\Exceptions\BookingNotFoundException;
+use App\Exceptions\InvalidFieldForUpdate;
 use App\Repositories\BookingRepository;
 use Database\Seeders\BookingSeeder;
 use Tests\TestCase;
@@ -12,17 +11,22 @@ use Tests\TestCase;
  */
 class BookingRepositoryTest extends TestCase
 {
-   protected function setUp(): void
-   {
-       parent::setUp();
-
-       $this->bookingRepository = app(BookingRepository::class);
-   }
-
-    public function testExceptionThrownIfBookingIsNotFound(): void
+    protected function setUp(): void
     {
-        $this->expectException(BookingNotFoundException::class);
+        parent::setUp();
 
-        $this->bookingRepository->getBooking(BookingSeeder::NON_EXISTENT_BOOKING);
-   }
+        $this->bookingRepository = app(BookingRepository::class);
+    }
+
+    public function testExceptionThrownWhenUpdatingAnInvalidField(): void
+    {
+        $this->expectException(InvalidFieldForUpdate::class);
+
+        $this->bookingRepository->updateBooking(
+            BookingSeeder::CUSTOMER_1_BOOKING_1,
+            [
+                'created_at' => '2023-01-01',
+            ]
+        );
+    }
 }

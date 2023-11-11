@@ -40,7 +40,6 @@ class BookingRepository
         );
     }
 
-
     public function updateBooking(
         int $bookingId,
         #[ArrayShape(BookingSource::VALID_UPDATE_FIELDS)] array $updateData

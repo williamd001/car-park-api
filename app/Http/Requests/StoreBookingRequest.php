@@ -62,21 +62,21 @@ class StoreBookingRequest extends FormRequest
 
     public function getParkingSpaceId(): int
     {
-        return (int) $this->post('parking_space_id');
+        return (int) $this->json('parking_space_id');
     }
 
     public function getDateFrom(): Carbon
     {
-        return new Carbon($this->post('date_from'));
+        return new Carbon($this->json('date_from'));
     }
 
     public function getDateTo(): Carbon
     {
-        return new Carbon($this->post('date_to'));
+        return new Carbon($this->json('date_to'));
     }
 
     public function getPriceGbp(): float
     {
-        return (float) $this->post('price_gbp');
+        return (float) $this->json('price_gbp');
     }
 }
