@@ -7,7 +7,7 @@ use App\Rules\ValidPrice;
 use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreBookingRequest extends FormRequest
+class UpdateBookingRequest extends FormRequest
 {
     protected $stopOnFirstFailure = true;
 
@@ -27,6 +27,11 @@ class StoreBookingRequest extends FormRequest
                 'integer',
                 'numeric',
                 'exists:customers,id'
+            ],
+            'booking_id' => [
+                'integer',
+                'numeric',
+                'exists:parking_space_bookings,id'
             ],
             'parking_space_id' => [
                 'required',
@@ -50,7 +55,8 @@ class StoreBookingRequest extends FormRequest
         return array_merge(
             parent::validationData(),
             [
-                'customer_id' => $this->route('customerId')
+                'customer_id' => $this->route('customerId'),
+                'booking_id' => $this->route('bookingId'),
             ]
         );
     }
@@ -78,5 +84,10 @@ class StoreBookingRequest extends FormRequest
     public function getPriceGbp(): float
     {
         return (float) $this->json('price_gbp');
+    }
+
+    public function getBookingId(): int
+    {
+        return (int) $this->route('bookingId');
     }
 }

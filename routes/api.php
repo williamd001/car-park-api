@@ -25,4 +25,5 @@ Route::get('/parking-spaces/availability', [ParkingSpaceController::class, 'inde
 Route::controller(BookingController::class)->group(function () {
     Route::post('/customers/{customerId}/bookings', 'store');
     Route::delete('/customers/{customerId}/bookings/{bookingId}', 'destroy');
+    Route::put('/customers/{customerId}/bookings/{bookingId}', 'update');
 });

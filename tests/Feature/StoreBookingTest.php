@@ -30,7 +30,7 @@ class StoreBookingTest extends TestCase
             ]
         );
 
-        $this->json(
+        $response = $this->json(
             'POST',
             'api/customers/' . CustomerSeeder::CUSTOMER_1 . '/bookings',
             [
@@ -40,9 +40,12 @@ class StoreBookingTest extends TestCase
                 'price_gbp' => 62.50,
             ]
         )
-            ->assertCreated()
+            ->assertCreated();
+
+        $response
             ->assertJson(
                 [
+                    'id' => $response->json('id'),
                     'customer_id' => CustomerSeeder::CUSTOMER_1,
                     'parking_space_id' => 1,
                     'date_from' => '2023-04-01',
@@ -72,8 +75,8 @@ class StoreBookingTest extends TestCase
             'api/customers/' . CustomerSeeder::CUSTOMER_2 . '/bookings',
             [
                 'parking_space_id' => 3,
-                'date_from' => BookingSeeder::CUSTOMER_1_BOOKING_DATE_FROM,
-                'date_to' => BookingSeeder::CUSTOMER_1_BOOKING_DATE_TO,
+                'date_from' => BookingSeeder::CUSTOMER_1_BOOKING_1_DATE_FROM,
+                'date_to' => BookingSeeder::CUSTOMER_1_BOOKING_1_DATE_TO,
                 'price_gbp' => 100,
             ]
         )
@@ -88,8 +91,8 @@ class StoreBookingTest extends TestCase
             [
                 'customer_id' => CustomerSeeder::CUSTOMER_2,
                 'parking_space_id' => 3,
-                'date_from' => BookingSeeder::CUSTOMER_1_BOOKING_DATE_FROM,
-                'date_to' => BookingSeeder::CUSTOMER_1_BOOKING_DATE_TO,
+                'date_from' => BookingSeeder::CUSTOMER_1_BOOKING_1_DATE_FROM,
+                'date_to' => BookingSeeder::CUSTOMER_1_BOOKING_1_DATE_TO,
                 'price_gbp' => 100,
             ]
         );

@@ -6,6 +6,7 @@ use App\Exceptions\BookingNotFoundException;
 use App\Models\Booking;
 use Carbon\Carbon;
 use Illuminate\Database\DatabaseManager;
+use JetBrains\PhpStorm\ArrayShape;
 
 class BookingMySQLSource implements BookingSource
 {
@@ -82,5 +83,19 @@ class BookingMySQLSource implements BookingSource
         $this->database
             ->table('parking_space_bookings')
             ->delete($bookingId);
+    }
+
+    public function updateBooking(
+        int $bookingId,
+        #[ArrayShape(self::VALID_UPDATE_FIELDS)] array $updateData): Booking
+    {
+        $updateData['updated_at'] = new Carbon();
+
+        $this->database
+            ->table('parking_space_bookings')
+            ->where('id', '=', $bookingId)
+            ->update($updateData);
+
+        return $this->getBooking($bookingId);
     }
 }

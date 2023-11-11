@@ -11,7 +11,8 @@ interface ParkingSpaceSource
     public function isParkingSpaceAvailable(
         int    $parkingSpaceId,
         Carbon $dateFrom,
-        Carbon $dateTo
+        Carbon $dateTo,
+        ?int $bookingIdToIgnore = null
     ): bool;
 
     public function calculatePriceGbp(

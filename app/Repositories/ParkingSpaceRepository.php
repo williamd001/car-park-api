@@ -20,7 +20,7 @@ class ParkingSpaceRepository
         int    $parkingSpaceId,
         Carbon $dateFrom,
         Carbon $dateTo,
-        ?int $bookingIdToIgnore = null
+        ?int   $bookingIdToIgnore = null
     ): bool
     {
         return $this->parkingSpaceSource->isParkingSpaceAvailable(
