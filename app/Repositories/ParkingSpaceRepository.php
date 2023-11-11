@@ -19,13 +19,15 @@ class ParkingSpaceRepository
     public function isParkingSpaceAvailable(
         int $parkingSpaceId,
         Carbon $dateFrom,
-        Carbon $dateTo
+        Carbon $dateTo,
+        ?int $bookingIdToIgnore = null
     ): bool
     {
         return $this->parkingSpaceSource->isParkingSpaceAvailable(
             $parkingSpaceId,
             $dateFrom,
-            $dateTo
+            $dateTo,
+            $bookingIdToIgnore
         );
     }
 }

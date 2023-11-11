@@ -39,26 +39,37 @@ class ParkingSpaceMySQLSource implements ParkingSpaceSource
     public function isParkingSpaceAvailable(
         int    $parkingSpaceId,
         Carbon $dateFrom,
-        Carbon $dateTo
+        Carbon $dateTo,
+        ?int $bookingIdToIgnore = null
     ): bool
     {
-        $results = $this->database
-            ->select(
-                '
+        $query =   '
             SELECT
-                ps.id AS parking_space_id
+                psb.id AS parking_space_id
             FROM parking_space_bookings AS psb
                 INNER JOIN parking_spaces AS ps ON psb.parking_space_id = ps.id
             WHERE
                 ps.id = :parking_space_id
                 AND psb.date_from <= :date_to
                 AND psb.date_to >= :date_from
-                ',
-                [
-                    'parking_space_id' => $parkingSpaceId,
-                    'date_from' => $dateFrom->toDateString(),
-                    'date_to' => $dateTo->toDateString(),
-                ]
+                ';
+
+        $bindings = [
+            'parking_space_id' => $parkingSpaceId,
+            'date_from' => $dateFrom->toDateString(),
+            'date_to' => $dateTo->toDateString(),
+        ];
+
+        if ($bookingIdToIgnore !== null) {
+            $query .= 'AND psb.id <> :booking_id_to_ignore';
+
+            $bindings['booking_id_to_ignore'] = $bookingIdToIgnore;
+        }
+
+        $results = $this->database
+            ->select(
+              $query,
+                $bindings
             );
 
         return count($results) === 0;

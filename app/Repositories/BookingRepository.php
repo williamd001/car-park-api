@@ -3,9 +3,11 @@
 namespace App\Repositories;
 
 use App\Exceptions\BookingNotFoundException;
+use App\Exceptions\InvalidFieldForUpdate;
 use App\Models\Booking;
 use App\Sources\BookingSource;
 use Carbon\Carbon;
+use JetBrains\PhpStorm\ArrayShape;
 
 class BookingRepository
 {
@@ -36,6 +38,21 @@ class BookingRepository
             $dateTo,
             $priceGbp
         );
+    }
+
+
+    public function updateBooking(
+        int $bookingId,
+        #[ArrayShape(BookingSource::VALID_UPDATE_FIELDS)] array $updateData
+    ): Booking
+    {
+        foreach ($updateData as $field => $value) {
+            if (! isset(BookingSource::VALID_UPDATE_FIELDS[$field])) {
+                throw new InvalidFieldForUpdate($field, 'booking');
+            }
+        }
+
+        return $this->bookingSource->updateBooking($bookingId, $updateData);
     }
 
     public function deleteBooking(int $bookingId): void
