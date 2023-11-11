@@ -14,4 +14,10 @@ interface ParkingSpaceSource
         Carbon $dateTo,
         ?int $bookingIdToIgnore = null
     ): bool;
+
+    public function calculatePriceGbp(
+        int $parkingSpaceId,
+        Carbon $dateFrom,
+        Carbon $dateTo
+    ): float;
 }

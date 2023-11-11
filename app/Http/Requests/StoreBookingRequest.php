@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Rules\ParkingSpaceAvailable;
+use App\Rules\ValidPrice;
 use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -27,19 +28,20 @@ class StoreBookingRequest extends FormRequest
                 'numeric',
                 'exists:customers,id'
             ],
-            'price_gbp' => [
-                'required',
-                'min:0',
-                'max:99999',
-                'numeric'
-            ],
             'parking_space_id' => [
                 'required',
                 'integer',
                 'numeric',
                 'exists:parking_spaces,id',
                 new ParkingSpaceAvailable
-            ]
+            ],
+            'price_gbp' => [
+                'required',
+                'min:0',
+                'max:99999',
+                'numeric',
+                new ValidPrice
+            ],
         ];
     }
 

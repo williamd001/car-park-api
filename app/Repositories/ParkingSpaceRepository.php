@@ -30,4 +30,17 @@ class ParkingSpaceRepository
             $bookingIdToIgnore
         );
     }
+
+    public function calculatePriceGbp(
+        int    $parkingSpaceId,
+        Carbon $dateFrom,
+        Carbon $dateTo
+    ): float
+    {
+        return $this->parkingSpaceSource->calculatePriceGbp(
+            $parkingSpaceId,
+            $dateFrom,
+            $dateTo
+        );
+    }
 }

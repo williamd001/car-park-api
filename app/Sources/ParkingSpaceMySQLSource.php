@@ -2,6 +2,7 @@
 
 namespace App\Sources;
 
+use App\Exceptions\FailedToCalculatePrice;
 use Carbon\Carbon;
 use Illuminate\Database\DatabaseManager;
 
@@ -73,5 +74,32 @@ class ParkingSpaceMySQLSource implements ParkingSpaceSource
             );
 
         return count($results) === 0;
+    }
+
+    public function calculatePriceGbp(int $parkingSpaceId, Carbon $dateFrom, Carbon $dateTo): float
+    {
+        $result = $this->database
+            ->select(
+                '
+                SELECT ROUND(:duration_in_days * l.default_price_per_day_gbp, 2) AS total_price_gbp
+                From parking_spaces AS ps
+                INNER JOIN locations AS l ON ps.location_id = l.id
+                WHERE ps.id = :parking_space_id
+                ',
+                [
+                    'duration_in_days' => $dateTo->clone()->addDay()->startOfDay()->diffInDays($dateFrom->clone()->startOfDay()),
+                    'parking_space_id' => $parkingSpaceId
+                ]
+            );
+
+        if (! isset($result[0]->total_price_gbp)) {
+            throw new FailedToCalculatePrice(
+                $parkingSpaceId,
+                $dateFrom,
+                $dateTo
+            );
+        }
+
+        return $result[0]->total_price_gbp;
     }
 }
