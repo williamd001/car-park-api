@@ -17,14 +17,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
-Route::get('/parking-spaces/availability', [ParkingSpaceController::class, 'index']);
-
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/users/{userId}/bookings', [BookingController::class, 'store']);
     Route::delete('/users/{userId}/bookings/{bookingId}', [BookingController::class, 'destroy']);
     Route::put('/users/{userId}/bookings/{bookingId}', [BookingController::class, 'update']);
+    Route::get('/parking-spaces/availability', [ParkingSpaceController::class, 'index']);
+
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
 });

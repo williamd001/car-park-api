@@ -19,7 +19,7 @@ class UpdateBookingTest extends TestCase
         $this->seed(DatabaseSeeder::class);
     }
 
-    public function testForbiddenIfAuthTokenIsNotProvided(): void
+    public function testUnauthorisedIfAuthTokenIsNotProvided(): void
     {
         $this->json(
             'PUT',
@@ -36,7 +36,7 @@ class UpdateBookingTest extends TestCase
 
     public function testUpdateBooking(): void
     {
-        Sanctum::actingAs(User::find(UserSeeder::USER_2));
+        Sanctum::actingAs(User::find(UserSeeder::USER_1));
 
         $this->assertDatabaseHas(
             'parking_space_bookings',
@@ -174,6 +174,47 @@ class UpdateBookingTest extends TestCase
                 'date_from' => BookingSeeder::USER_2_BOOKING_1_DATE_FROM,
                 'date_to' => '2023-01-23',
                 'price_gbp' => 287.50,
+            ]
+        );
+    }
+
+    public function testUsersCannotUpdateOtherUsersBookings(): void
+    {
+        Sanctum::actingAs(User::find(UserSeeder::USER_2));
+
+        $this->assertDatabaseHas(
+            'parking_space_bookings',
+            [
+                'id' => BookingSeeder::USER_1_BOOKING_1,
+                'user_id' => 1,
+                'parking_space_id' => 3,
+                'date_from' => '2023-01-02',
+                'date_to' => '2023-01-06',
+                'price_gbp' => '62.50',
+            ]
+        );
+
+        $this->json(
+            'PUT',
+            '/api/users/' . UserSeeder::USER_1 . '/bookings/' . BookingSeeder::USER_1_BOOKING_1,
+            [
+                'parking_space_id' => 3,
+                'date_from' => '2023-02-02',
+                'date_to' => '2023-02-06',
+                'price_gbp' => '62.50',
+            ]
+        )
+            ->assertForbidden();
+
+        $this->assertDatabaseHas(
+            'parking_space_bookings',
+            [
+                'id' => BookingSeeder::USER_1_BOOKING_1,
+                'user_id' => 1,
+                'parking_space_id' => 3,
+                'date_from' => '2023-01-02',
+                'date_to' => '2023-01-06',
+                'price_gbp' => '62.50',
             ]
         );
     }

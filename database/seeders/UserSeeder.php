@@ -55,7 +55,16 @@ class UserSeeder extends Seeder
                 'tokenable_id' => self::USER_1,
                 'tokenable_type' => User::class,
                 'name' => 'test-token-user-1',
-                'token' => hash('sha256', 'sanctum-token-user-1'), // Replace with a secure method to generate a token
+                'token' => hash('sha256', 'sanctum-token-user-1'),
+            ]
+        );
+
+        PersonalAccessToken::create(
+            [
+                'tokenable_id' => self::USER_2,
+                'tokenable_type' => User::class,
+                'name' => 'test-token-user-2',
+                'token' => hash('sha256', 'sanctum-token-user-2'),
             ]
         );
     }

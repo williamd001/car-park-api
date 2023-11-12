@@ -39,14 +39,6 @@ class DeleteBookingTest extends TestCase
             ]
         );
 
-        $this->assertDatabasehas(
-            'parking_space_bookings',
-            [
-                'id' => BookingSeeder::USER_1_BOOKING_2,
-                'user_id' => UserSeeder::USER_1,
-            ]
-        );
-
         $this->json(
             'DELETE',
             '/api/users/' . UserSeeder::USER_1 . '/bookings/' . BookingSeeder::USER_1_BOOKING_1
@@ -54,6 +46,41 @@ class DeleteBookingTest extends TestCase
             ->assertNoContent();
 
         $this->assertDatabaseMissing(
+            'parking_space_bookings',
+            [
+                'id' => BookingSeeder::USER_1_BOOKING_1,
+                'user_id' => UserSeeder::USER_1,
+            ]
+        );
+
+        $this->assertDatabasehas(
+            'parking_space_bookings',
+            [
+                'id' => BookingSeeder::USER_1_BOOKING_2,
+                'user_id' => UserSeeder::USER_1,
+            ]
+        );
+    }
+
+    public function testUsersCannotDeleteOtherUsersBookings(): void
+    {
+        Sanctum::actingAs(User::find(UserSeeder::USER_2));
+
+        $this->assertDatabaseHas(
+            'parking_space_bookings',
+            [
+                'id' => BookingSeeder::USER_1_BOOKING_1,
+                'user_id' => UserSeeder::USER_1,
+            ]
+        );
+
+        $this->json(
+            'DELETE',
+            '/api/users/' . UserSeeder::USER_2 . '/bookings/' . BookingSeeder::USER_1_BOOKING_1
+        )
+            ->assertForbidden();
+
+        $this->assertDatabaseHas(
             'parking_space_bookings',
             [
                 'id' => BookingSeeder::USER_1_BOOKING_1,

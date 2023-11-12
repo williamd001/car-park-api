@@ -37,24 +37,24 @@ class BookingController extends Controller
 
     public function update(UpdateBookingRequest $request): JsonResponse
     {
-        $booking = $this->bookingRepository->updateBooking(
-            $request->getBookingId(),
-            [
-                'parking_space_id' => $request->getParkingSpaceId(),
-                'date_from' => $request->getDateFrom()->toDateString(),
-                'date_to' => $request->getDateTo()->toDateString(),
-                'price_gbp' => $request->getPriceGbp()
-            ]
-        );
+        $booking = $this->bookingRepository
+            ->updateBooking(
+                $request->getBookingId(),
+                [
+                    'parking_space_id' => $request->getParkingSpaceId(),
+                    'date_from' => $request->getDateFrom()->toDateString(),
+                    'date_to' => $request->getDateTo()->toDateString(),
+                    'price_gbp' => $request->getPriceGbp()
+                ]
+            );
 
         return new JsonResponse($booking->toArray());
     }
 
     public function destroy(DeleteBookingRequest $request): JsonResponse
     {
-        $this->bookingRepository->getBooking($request->getBookingId());
-
-        $this->bookingRepository->deleteBooking($request->getBookingId());
+        $this->bookingRepository
+            ->deleteBooking($request->getBookingId());
 
         return new JsonResponse(status: Response::HTTP_NO_CONTENT);
     }

@@ -2,7 +2,10 @@
 
 namespace Tests\Feature;
 
+use App\Models\User;
 use Database\Seeders\DatabaseSeeder;
+use Database\Seeders\UserSeeder;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class ParkingSpaceAvailabilityTest extends TestCase
@@ -14,11 +17,26 @@ class ParkingSpaceAvailabilityTest extends TestCase
         $this->seed(DatabaseSeeder::class);
     }
 
+    public function testUnauthorisedIfAuthTokenIsNotProvided(): void
+    {
+        $this->json(
+            'GET',
+            '/api/parking-spaces/availability',
+            [
+                'dateFrom' => '2023-12-05',
+                'dateTo' => '2023-12-25',
+            ]
+        )
+            ->assertUnauthorized();
+    }
+
     /**
      * @dataProvider parkingSpaceAvailabilityProvider
      */
     public function testParkingSpaceAvailability(array $inputParams, string $resultFile): void
     {
+        Sanctum::actingAs(User::find(UserSeeder::USER_1));
+
         $this->json(
             'GET',
             '/api/parking-spaces/availability',
@@ -74,6 +92,8 @@ class ParkingSpaceAvailabilityTest extends TestCase
      * */
     public function testValidation(array $queryParameters, array $expectedErrors): void
     {
+        Sanctum::actingAs(User::find(UserSeeder::USER_1));
+
         $this->json(
             'GET',
             '/api/parking-spaces/availability',

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Repositories\BookingRepository;
 use App\Rules\ParkingSpaceAvailable;
 use App\Rules\ValidPrice;
 use Carbon\Carbon;
@@ -10,6 +11,19 @@ use Illuminate\Foundation\Http\FormRequest;
 class UpdateBookingRequest extends FormRequest
 {
     protected $stopOnFirstFailure = true;
+
+    public function authorize(): bool
+    {
+        // prevent invalid booking id
+        $this->getValidatorInstance()->validate();
+
+        /* @var BookingRepository $bookingRepository */
+        $bookingRepository = app(BookingRepository::class);
+
+        $booking = $bookingRepository->getBooking($this->getBookingId());
+
+        return $this->user()->id === $booking->getUserId();
+    }
 
     public function rules(): array
     {

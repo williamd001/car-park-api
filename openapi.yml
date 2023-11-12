@@ -34,12 +34,14 @@ paths:
                 $ref: '#/components/schemas/ArrayOfParkingSpaces'
         '422':
           $ref: '#/components/responses/Unprocessable'
-  /customers/{customerId}/bookings:
+        '401':
+          $ref: '#/components/responses/Unauthorised'
+  /users/{userId}/bookings:
     post:
       summary: Create parking space booking
-      description: Store a parking space booking for a customer
+      description: Store a parking space booking for a user
       parameters:
-        - name: customerId
+        - name: userId
           in: path
           required: true
           schema:
@@ -80,13 +82,15 @@ paths:
                 $ref: '#/components/schemas/Booking'
         '422':
           $ref: '#/components/responses/Unprocessable'
+        '401':
+          $ref: '#/components/responses/Unauthorised'
 
-  /customers/{customerId}/bookings/{bookingId}:
+  /users/{userId}/bookings/{bookingId}:
     put:
       summary: Update parking space booking
-      description: Updates a parking space booking for a customer
+      description: Updates a parking space booking for a user
       parameters:
-        - name: customerId
+        - name: userId
           in: path
           required: true
           schema:
@@ -112,7 +116,7 @@ paths:
               properties:
                 parking_space_id:
                   type: integer
-                  example: 1
+                  example: 4
                 date_from:
                   type: string
                   format: date
@@ -133,11 +137,13 @@ paths:
                 $ref: '#/components/schemas/Booking'
         '422':
           $ref: '#/components/responses/Unprocessable'
+        '401':
+          $ref: '#/components/responses/Unauthorised'
     delete:
       summary: Delete parking space booking
-      description: Deletes a parking space booking for a customer
+      description: Deletes a parking space booking for a user
       parameters:
-        - name: customerId
+        - name: userId
           in: path
           required: true
           schema:
@@ -153,9 +159,18 @@ paths:
         '204':
           description: No content - successfully deleted
         '404':
-          description: Booking not found for customer
+          description: Booking not found for user
+        '401':
+          $ref: '#/components/responses/Unauthorised'
 
 components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: |
+        user_1 demo token: sanctum-token-user-1 \
+        user_2 demo token: sanctum-token-user-2
   schemas:
     ParkingSpace:
       type: object
@@ -179,7 +194,7 @@ components:
         id:
           type: integer
           example: 1
-        customer_id:
+        user_id:
           type: integer
           example: 1
         parking_space_id:
@@ -217,3 +232,15 @@ components:
               errors:
                 type: object
                 additionalProperties: true
+    Unauthorised:
+      description: User is not authorised to access this endpoint. Check Authorization header contains Bearer token
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: Unauthenticated
+security:
+  - bearerAuth: []

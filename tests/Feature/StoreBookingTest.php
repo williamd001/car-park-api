@@ -19,7 +19,7 @@ class StoreBookingTest extends TestCase
         $this->seed(DatabaseSeeder::class);
     }
 
-    public function testForbiddenIfAuthTokenIsNotProvided(): void
+    public function testUnauthorisedIfAuthTokenIsNotProvided(): void
     {
         $this->json(
             'POST',
