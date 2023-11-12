@@ -25,7 +25,7 @@ class BookingMySQLSource implements BookingSource
             ->first(
                 [
                     'id',
-                    'customer_id',
+                    'user_id',
                     'parking_space_id',
                     'date_from',
                     'date_to',
@@ -41,7 +41,7 @@ class BookingMySQLSource implements BookingSource
 
         return new Booking(
             $booking->id,
-            $booking->customer_id,
+            $booking->user_id,
             $booking->parking_space_id,
             new Carbon($booking->date_from),
             new Carbon($booking->date_to),
@@ -52,7 +52,7 @@ class BookingMySQLSource implements BookingSource
     }
 
     public function storeBooking(
-        int    $customerId,
+        int    $userId,
         int    $parkingSpaceId,
         Carbon $dateFrom,
         Carbon $dateTo,
@@ -65,7 +65,7 @@ class BookingMySQLSource implements BookingSource
             ->table('parking_space_bookings')
             ->insertGetId(
                 [
-                    'customer_id' => $customerId,
+                    'user_id' => $userId,
                     'parking_space_id' => $parkingSpaceId,
                     'date_from' => $dateFrom->toDateString(),
                     'date_to' => $dateTo->toDateString(),

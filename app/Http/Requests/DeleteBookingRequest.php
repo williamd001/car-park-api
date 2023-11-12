@@ -2,20 +2,35 @@
 
 namespace App\Http\Requests;
 
+use App\Repositories\BookingRepository;
 use Illuminate\Foundation\Http\FormRequest;
 
 class DeleteBookingRequest extends FormRequest
 {
+    public function authorize(): bool
+    {
+        // prevent invalid booking id
+        $this->getValidatorInstance()->validate();
+
+        /* @var BookingRepository $bookingRepository */
+        $bookingRepository = app(BookingRepository::class);
+
+        $booking = $bookingRepository->getBooking($this->getBookingId());
+
+        return $this->user()->id === $booking->getUserId();
+}
+
     public function rules(): array
     {
         return [
-            'customerId' => [
+            'user_id' => [
                 'integer',
                 'numeric',
             ],
-            'bookingId' => [
+            'booking_id' => [
                 'integer',
                 'numeric',
+                'exists:parking_space_bookings,id'
             ],
         ];
     }
@@ -25,15 +40,15 @@ class DeleteBookingRequest extends FormRequest
         return array_merge(
             parent::validationData(),
             [
-                'customerId' => $this->route('customerId'),
-                'bookingId' => $this->route('bookingId'),
+                'user_id' => $this->route('userId'),
+                'booking_id' => $this->route('bookingId'),
             ]
         );
     }
 
-    public function getCustomerId(): int
+    public function getUserId(): int
     {
-        return (int) $this->route('customerId');
+        return (int) $this->route('userId');
     }
 
     public function getBookingId(): int

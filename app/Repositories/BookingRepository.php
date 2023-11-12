@@ -24,7 +24,7 @@ class BookingRepository
     }
 
     public function storeBooking(
-        int    $customerId,
+        int    $userId,
         int    $parkingSpaceId,
         Carbon $dateFrom,
         Carbon $dateTo,
@@ -32,7 +32,7 @@ class BookingRepository
     ): Booking
     {
         return $this->bookingSource->storeBooking(
-            $customerId,
+            $userId,
             $parkingSpaceId,
             $dateFrom,
             $dateTo,

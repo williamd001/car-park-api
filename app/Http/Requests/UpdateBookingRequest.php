@@ -23,10 +23,10 @@ class UpdateBookingRequest extends FormRequest
                 'date_format:Y-m-d',
                 'after:date_from',
             ],
-            'customer_id' => [
+            'user_id' => [
                 'integer',
                 'numeric',
-                'exists:customers,id'
+                'exists:users,id'
             ],
             'booking_id' => [
                 'integer',
@@ -55,15 +55,10 @@ class UpdateBookingRequest extends FormRequest
         return array_merge(
             parent::validationData(),
             [
-                'customer_id' => $this->route('customerId'),
+                'user_id' => $this->route('userId'),
                 'booking_id' => $this->route('bookingId'),
             ]
         );
-    }
-
-    public function getCustomerId(): int
-    {
-        return (int) $this->route('customerId');
     }
 
     public function getParkingSpaceId(): int

@@ -11,7 +11,7 @@ abstract class TestCase extends BaseTestCase
     use CreatesApplication;
     use RefreshDatabase;
 
-    protected const TEST_DATE_TIME = '2023-01-01 09:00:00';
+    public const TEST_DATE_TIME = '2023-01-01 09:00:00';
 
     protected function setUp(): void
     {

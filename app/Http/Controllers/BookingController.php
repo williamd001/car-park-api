@@ -22,7 +22,7 @@ class BookingController extends Controller
     {
         $booking = $this->bookingRepository
             ->storeBooking(
-                $request->getCustomerId(),
+                $request->getUserId(),
                 $request->getParkingSpaceId(),
                 $request->getDateFrom(),
                 $request->getDateTo(),
@@ -37,7 +37,7 @@ class BookingController extends Controller
 
     public function update(UpdateBookingRequest $request): JsonResponse
     {
-       $booking = $this->bookingRepository->updateBooking(
+        $booking = $this->bookingRepository->updateBooking(
             $request->getBookingId(),
             [
                 'parking_space_id' => $request->getParkingSpaceId(),
@@ -52,15 +52,7 @@ class BookingController extends Controller
 
     public function destroy(DeleteBookingRequest $request): JsonResponse
     {
-        try {
-            $booking = $this->bookingRepository->getBooking($request->getBookingId());
-
-            if ($booking->getCustomerId() !== $request->getCustomerId()) {
-                return new JsonResponse(status: Response::HTTP_NOT_FOUND);
-            }
-        } catch (BookingNotFoundException) {
-            return new JsonResponse(status: Response::HTTP_NOT_FOUND);
-        }
+        $this->bookingRepository->getBooking($request->getBookingId());
 
         $this->bookingRepository->deleteBooking($request->getBookingId());
 

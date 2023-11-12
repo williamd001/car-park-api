@@ -14,6 +14,11 @@ class StoreBookingRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'user_id' => [
+                'integer',
+                'numeric',
+                'exists:users,id'
+            ],
             'date_from' => [
                 'required',
                 'date_format:Y-m-d',
@@ -22,11 +27,6 @@ class StoreBookingRequest extends FormRequest
                 'required',
                 'date_format:Y-m-d',
                 'after:date_from',
-            ],
-            'customer_id' => [
-                'integer',
-                'numeric',
-                'exists:customers,id'
             ],
             'parking_space_id' => [
                 'required',
@@ -50,14 +50,14 @@ class StoreBookingRequest extends FormRequest
         return array_merge(
             parent::validationData(),
             [
-                'customer_id' => $this->route('customerId')
+                'user_id' => $this->route('userId')
             ]
         );
     }
 
-    public function getCustomerId(): int
+    public function getUserId(): int
     {
-        return (int) $this->route('customerId');
+        return (int) $this->route('userId');
     }
 
     public function getParkingSpaceId(): int
