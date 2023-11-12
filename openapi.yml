@@ -10,6 +10,8 @@ paths:
     get:
       summary: Parking space availability
       description: Returns a list of available parking spaces for a given date range.
+      tags:
+        - Availability
       parameters:
         - name: dateFrom
           in: query
@@ -40,6 +42,8 @@ paths:
     post:
       summary: Create parking space booking
       description: Store a parking space booking for a user
+      tags:
+        - Booking
       parameters:
         - name: userId
           in: path
@@ -89,6 +93,8 @@ paths:
     put:
       summary: Update parking space booking
       description: Updates a parking space booking for a user
+      tags:
+        - Booking
       parameters:
         - name: userId
           in: path
@@ -142,6 +148,8 @@ paths:
     delete:
       summary: Delete parking space booking
       description: Deletes a parking space booking for a user
+      tags:
+        - Booking
       parameters:
         - name: userId
           in: path
