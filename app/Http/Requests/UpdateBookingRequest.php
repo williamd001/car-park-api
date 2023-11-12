@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Repositories\BookingRepository;
 use App\Rules\ParkingSpaceAvailable;
 use App\Rules\ValidPrice;
 use Carbon\Carbon;
@@ -10,6 +11,19 @@ use Illuminate\Foundation\Http\FormRequest;
 class UpdateBookingRequest extends FormRequest
 {
     protected $stopOnFirstFailure = true;
+
+    public function authorize(): bool
+    {
+        // prevent invalid booking id
+        $this->getValidatorInstance()->validate();
+
+        /* @var BookingRepository $bookingRepository */
+        $bookingRepository = app(BookingRepository::class);
+
+        $booking = $bookingRepository->getBooking($this->getBookingId());
+
+        return $this->user()->id === $booking->getUserId();
+    }
 
     public function rules(): array
     {
@@ -23,10 +37,10 @@ class UpdateBookingRequest extends FormRequest
                 'date_format:Y-m-d',
                 'after:date_from',
             ],
-            'customer_id' => [
+            'user_id' => [
                 'integer',
                 'numeric',
-                'exists:customers,id'
+                'exists:users,id'
             ],
             'booking_id' => [
                 'integer',
@@ -55,15 +69,10 @@ class UpdateBookingRequest extends FormRequest
         return array_merge(
             parent::validationData(),
             [
-                'customer_id' => $this->route('customerId'),
+                'user_id' => $this->route('userId'),
                 'booking_id' => $this->route('bookingId'),
             ]
         );
-    }
-
-    public function getCustomerId(): int
-    {
-        return (int) $this->route('customerId');
     }
 
     public function getParkingSpaceId(): int

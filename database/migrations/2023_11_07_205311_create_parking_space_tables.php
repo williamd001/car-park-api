@@ -55,9 +55,9 @@ return new class extends Migration {
         Schema::create('parking_space_bookings', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('customer_id')
+            $table->foreignId('user_id')
                 ->references('id')
-                ->on('customers')
+                ->on('users')
                 ->cascadeOnDelete();
 
             $table->foreignId('parking_space_id')

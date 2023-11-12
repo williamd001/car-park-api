@@ -3,6 +3,7 @@
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\ParkingSpaceController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,14 +17,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::post('/users/{userId}/bookings', [BookingController::class, 'store']);
+    Route::delete('/users/{userId}/bookings/{bookingId}', [BookingController::class, 'destroy']);
+    Route::put('/users/{userId}/bookings/{bookingId}', [BookingController::class, 'update']);
+    Route::get('/parking-spaces/availability', [ParkingSpaceController::class, 'index']);
 
-Route::get('/parking-spaces/availability', [ParkingSpaceController::class, 'index']);
-
-Route::controller(BookingController::class)->group(function () {
-    Route::post('/customers/{customerId}/bookings', 'store');
-    Route::delete('/customers/{customerId}/bookings/{bookingId}', 'destroy');
-    Route::put('/customers/{customerId}/bookings/{bookingId}', 'update');
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
 });

@@ -9,7 +9,7 @@ class Booking implements Arrayable
 {
     public function __construct(
         private int    $id,
-        private int    $customerId,
+        private int    $userId,
         private int    $parkingSpaceId,
         private Carbon $dateFrom,
         private Carbon $dateTo,
@@ -20,16 +20,16 @@ class Booking implements Arrayable
     {
     }
 
-    public function getCustomerId(): int
+    public function getUserId(): int
     {
-        return $this->customerId;
+        return $this->userId;
     }
 
     public function toArray(): array
     {
         return [
             'id' => $this->id,
-            'customer_id' => $this->customerId,
+            'user_id' => $this->userId,
             'parking_space_id' => $this->parkingSpaceId,
             'date_from' => $this->dateFrom->toDateString(),
             'date_to' => $this->dateTo->toDateString(),

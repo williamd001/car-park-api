@@ -22,11 +22,11 @@ interface BookingSource
     public function getBooking(int $bookingId): Booking;
 
     public function storeBooking(
-        int $customerId,
-        int $parkingSpaceId,
+        int    $userId,
+        int    $parkingSpaceId,
         Carbon $dateFrom,
         Carbon $dateTo,
-        float $priceGbp
+        float  $priceGbp
     ): Booking;
 
     public function updateBooking(

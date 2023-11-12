@@ -23,7 +23,7 @@ class BookingRepositoryTest extends TestCase
         $this->expectException(InvalidFieldForUpdate::class);
 
         $this->bookingRepository->updateBooking(
-            BookingSeeder::CUSTOMER_1_BOOKING_1,
+            BookingSeeder::USER_1_BOOKING_1,
             [
                 'created_at' => '2023-01-01',
             ]
