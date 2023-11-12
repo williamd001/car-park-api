@@ -20,7 +20,7 @@ class BookingMySQLSource implements BookingSource
     public function getBooking(int $bookingId): Booking
     {
         $booking = $this->database
-            ->table('parking_space_bookings')
+            ->table('bookings')
             ->where('id', '=', $bookingId)
             ->first(
                 [
@@ -62,7 +62,7 @@ class BookingMySQLSource implements BookingSource
         $currentDate = new Carbon();
 
         $bookingId = $this->database
-            ->table('parking_space_bookings')
+            ->table('bookings')
             ->insertGetId(
                 [
                     'user_id' => $userId,
@@ -81,7 +81,7 @@ class BookingMySQLSource implements BookingSource
     public function deleteBooking(int $bookingId): void
     {
         $this->database
-            ->table('parking_space_bookings')
+            ->table('bookings')
             ->delete($bookingId);
     }
 
@@ -92,7 +92,7 @@ class BookingMySQLSource implements BookingSource
         $updateData['updated_at'] = new Carbon();
 
         $this->database
-            ->table('parking_space_bookings')
+            ->table('bookings')
             ->where('id', '=', $bookingId)
             ->update($updateData);
 

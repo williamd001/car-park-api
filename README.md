@@ -12,13 +12,27 @@ parking there for a selected period of time).
 
 <br>
 
+## Setup
+
+This project uses Laravel Sail to run locally using docker. 
+
+1. Clone the repo
+2. Run `cp .env.example .env`
+3. Run `./vendor/bin/sail start` or use the handy `./start.sh` script
+4. Run `./vendor/bin/sail artisan key:generate`
+5. Run `./vendor/bin/sail artisan migrate --seed`
+
+to run the test suites run `./vendor/bin/sail test` or use `./localtest.sh`
+
+<br>
+
 ## Endpoint documentation
 
 For further information on each of the endpoints contained within the Car park API please consult the openapi.yml document
 
 [Open Api Documentation](openapi.yml)
 
-**Remember to include a Bearer token in the authorization header when interacting with any of the endpoint**
+**Remember to include a Bearer token in the authorization header when interacting with any of the endpoints**
 
 user_1 demo token: sanctum-token-user-1
 
@@ -26,14 +40,13 @@ user_2 demo token: sanctum-token-user-2
 
 <br>
 
-## Assumptions
+## price calculations
 
-- Price calculations are calculated using the `date_from` start of day till the end of day `date_to`. 
+Price calculations are calculated using the `date_from` start of day till the end of day `date_to`. 
 
-For example if a customer books a parking space from 2023-01-01 to 2023-01-05 that would be 5 days.
+For example if a customer books a parking space from `2023-01-01` to `2023-01-05` that would be 5 days.
 
-
-The customer in the above example would be entitled to park anytime from 2023-01-01 00:00:00 till 2023-01-05 23:59:59
+The customer in the above example would be entitled to park anytime from `2023-01-01 00:00:00` till `2023-01-05 23:59:59`
 
 <br>
 

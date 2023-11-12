@@ -30,7 +30,7 @@ class DeleteBookingRequest extends FormRequest
             'booking_id' => [
                 'integer',
                 'numeric',
-                'exists:parking_space_bookings,id'
+                'exists:bookings,id'
             ],
         ];
     }
@@ -44,11 +44,6 @@ class DeleteBookingRequest extends FormRequest
                 'booking_id' => $this->route('bookingId'),
             ]
         );
-    }
-
-    public function getUserId(): int
-    {
-        return (int) $this->route('userId');
     }
 
     public function getBookingId(): int

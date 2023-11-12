@@ -23,11 +23,11 @@ class ParkingSpaceMySQLSource implements ParkingSpaceSource
                 ROUND(:duration_in_days * l.default_price_per_day_gbp, 2) AS total_price_gbp
             FROM parking_spaces AS ps
                 INNER JOIN locations AS l ON ps.location_id = l.id
-                LEFT JOIN parking_space_bookings AS psb ON ps.id = psb.parking_space_id
+                LEFT JOIN bookings AS b ON ps.id = b.parking_space_id
             WHERE
-                psb.date_from IS NULL
-                OR psb.date_to < :date_from
-                OR psb.date_from > :date_to
+                b.date_from IS NULL
+                OR b.date_to < :date_from
+                OR b.date_from > :date_to
                 ',
                 [
                     'date_from' => $dateFrom->toDateString(),
@@ -46,13 +46,13 @@ class ParkingSpaceMySQLSource implements ParkingSpaceSource
     {
         $query =   '
             SELECT
-                psb.id AS parking_space_id
-            FROM parking_space_bookings AS psb
-                INNER JOIN parking_spaces AS ps ON psb.parking_space_id = ps.id
+                b.id AS parking_space_id
+            FROM bookings AS b
+                INNER JOIN parking_spaces AS ps ON b.parking_space_id = ps.id
             WHERE
                 ps.id = :parking_space_id
-                AND psb.date_from <= :date_to
-                AND psb.date_to >= :date_from
+                AND b.date_from <= :date_to
+                AND b.date_to >= :date_from
                 ';
 
         $bindings = [
@@ -62,7 +62,7 @@ class ParkingSpaceMySQLSource implements ParkingSpaceSource
         ];
 
         if ($bookingIdToIgnore !== null) {
-            $query .= 'AND psb.id <> :booking_id_to_ignore';
+            $query .= 'AND b.id <> :booking_id_to_ignore';
 
             $bindings['booking_id_to_ignore'] = $bookingIdToIgnore;
         }

@@ -45,7 +45,7 @@ class UpdateBookingRequest extends FormRequest
             'booking_id' => [
                 'integer',
                 'numeric',
-                'exists:parking_space_bookings,id'
+                'exists:bookings,id'
             ],
             'parking_space_id' => [
                 'required',
