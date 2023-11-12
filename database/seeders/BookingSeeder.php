@@ -23,7 +23,7 @@ class BookingSeeder extends Seeder
 
     public function run(): void
     {
-        DB::table('parking_space_bookings')
+        DB::table('bookings')
             ->insert(
                 [
                     [

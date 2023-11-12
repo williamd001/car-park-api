@@ -39,7 +39,7 @@ class UpdateBookingTest extends TestCase
         Sanctum::actingAs(User::find(UserSeeder::USER_1));
 
         $this->assertDatabaseHas(
-            'parking_space_bookings',
+            'bookings',
             [
                 'id' => BookingSeeder::USER_1_BOOKING_1,
                 'user_id' => 1,
@@ -75,7 +75,7 @@ class UpdateBookingTest extends TestCase
             );
 
         $this->assertDatabaseHas(
-            'parking_space_bookings',
+            'bookings',
             [
                 'id' => BookingSeeder::USER_1_BOOKING_1,
                 'user_id' => 1,
@@ -110,7 +110,7 @@ class UpdateBookingTest extends TestCase
             );
 
         $this->assertDatabaseMissing(
-            'parking_space_bookings',
+            'bookings',
             [
                 'id' => BookingSeeder::USER_2_BOOKING_1,
                 'user_id' => UserSeeder::USER_2,
@@ -128,7 +128,7 @@ class UpdateBookingTest extends TestCase
         Sanctum::actingAs(User::find(UserSeeder::USER_2));
 
         $this->assertDatabaseHas(
-            'parking_space_bookings',
+            'bookings',
             [
                 'id' => BookingSeeder::USER_2_BOOKING_1,
                 'user_id' => 2,
@@ -166,7 +166,7 @@ class UpdateBookingTest extends TestCase
             );
 
         $this->assertDatabaseHas(
-            'parking_space_bookings',
+            'bookings',
             [
                 'id' => BookingSeeder::USER_2_BOOKING_1,
                 'user_id' => UserSeeder::USER_2,
@@ -183,7 +183,7 @@ class UpdateBookingTest extends TestCase
         Sanctum::actingAs(User::find(UserSeeder::USER_2));
 
         $this->assertDatabaseHas(
-            'parking_space_bookings',
+            'bookings',
             [
                 'id' => BookingSeeder::USER_1_BOOKING_1,
                 'user_id' => 1,
@@ -207,7 +207,7 @@ class UpdateBookingTest extends TestCase
             ->assertForbidden();
 
         $this->assertDatabaseHas(
-            'parking_space_bookings',
+            'bookings',
             [
                 'id' => BookingSeeder::USER_1_BOOKING_1,
                 'user_id' => 1,

@@ -17,8 +17,6 @@ class UserSeeder extends Seeder
 
     public const USER_2 = 2;
 
-    public const NON_EXISTENT_CUSTOMER = 999;
-
     /**
      * Run the database seeds.
      */

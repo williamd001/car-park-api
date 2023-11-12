@@ -32,7 +32,7 @@ class DeleteBookingTest extends TestCase
         Sanctum::actingAs(User::find(UserSeeder::USER_1));
 
         $this->assertDatabaseHas(
-            'parking_space_bookings',
+            'bookings',
             [
                 'id' => BookingSeeder::USER_1_BOOKING_1,
                 'user_id' => UserSeeder::USER_1,
@@ -46,7 +46,7 @@ class DeleteBookingTest extends TestCase
             ->assertNoContent();
 
         $this->assertDatabaseMissing(
-            'parking_space_bookings',
+            'bookings',
             [
                 'id' => BookingSeeder::USER_1_BOOKING_1,
                 'user_id' => UserSeeder::USER_1,
@@ -54,7 +54,7 @@ class DeleteBookingTest extends TestCase
         );
 
         $this->assertDatabasehas(
-            'parking_space_bookings',
+            'bookings',
             [
                 'id' => BookingSeeder::USER_1_BOOKING_2,
                 'user_id' => UserSeeder::USER_1,
@@ -67,7 +67,7 @@ class DeleteBookingTest extends TestCase
         Sanctum::actingAs(User::find(UserSeeder::USER_2));
 
         $this->assertDatabaseHas(
-            'parking_space_bookings',
+            'bookings',
             [
                 'id' => BookingSeeder::USER_1_BOOKING_1,
                 'user_id' => UserSeeder::USER_1,
@@ -81,7 +81,7 @@ class DeleteBookingTest extends TestCase
             ->assertForbidden();
 
         $this->assertDatabaseHas(
-            'parking_space_bookings',
+            'bookings',
             [
                 'id' => BookingSeeder::USER_1_BOOKING_1,
                 'user_id' => UserSeeder::USER_1,

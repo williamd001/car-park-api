@@ -39,7 +39,7 @@ class StoreBookingTest extends TestCase
         Sanctum::actingAs(User::find(UserSeeder::USER_1));
 
         $this->assertDatabaseMissing(
-            'parking_space_bookings',
+            'bookings',
             [
                 'user_id' => UserSeeder::USER_1,
                 'parking_space_id' => 1,
@@ -76,7 +76,7 @@ class StoreBookingTest extends TestCase
             );
 
         $this->assertDatabaseHas(
-            'parking_space_bookings',
+            'bookings',
             [
                 'user_id' => UserSeeder::USER_1,
                 'parking_space_id' => 1,
@@ -108,7 +108,7 @@ class StoreBookingTest extends TestCase
         );
 
         $this->assertDatabaseMissing(
-            'parking_space_bookings',
+            'bookings',
             [
                 'user_id' => UserSeeder::USER_2,
                 'parking_space_id' => 3,
@@ -142,7 +142,7 @@ class StoreBookingTest extends TestCase
             );
 
         $this->assertDatabaseMissing(
-            'parking_space_bookings',
+            'bookings',
             [
                 'user_id' => UserSeeder::USER_2,
                 'parking_space_id' => 1,
